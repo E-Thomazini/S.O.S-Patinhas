@@ -1,0 +1,47 @@
+{% extends 'base.html' %}{% block title %}{{'Como ajudar' if kind=='donate' else 'Voluntariado'}}{% endblock %}{% block public_content %}
+<section class="container page-intro"><div class="kicker">FAÇA PARTE DESSA TRANSFORMAÇÃO</div><h1>{{'Toda ajuda tem o poder de' if kind=='donate' else 'O mundo precisa de' }} <span>{{'transformar.' if kind=='donate' else 'gente como você.'}}</span></h1><p>Não é preciso muito para fazer a diferença. O importante é começar.</p></section>
+{% if kind=='donate' %}
+<section class="container section-tight donate-page">
+  <div class="donation-grid">
+    <div class="card donation-main">
+      <div class="kicker">DOAÇÃO FINANCEIRA</div>
+      <h2>Ajude pelo <span>Pix.</span></h2>
+      <p>Sua contribuição pode apoiar alimentação, medicação, castração, transporte e itens básicos para os animais resgatados.</p>
+      {% if donation.enabled %}
+      <div class="pix-card"><div><small>CHAVE PIX INFORMADA PELA ONG</small>
+      <div class="pix-key" id="pix-key">{{ donation.pix_key }}</div>
+      <small>{{ donation.pix_type }} • {{ donation.pix_name }}</small></div>
+      <button class="btn btn-primary" type="button" data-copy-target="pix-key">Copiar chave Pix</button></div>
+      {% else %}
+      <div class="care-note space-top" role="status"><strong>Doações via Pix ainda não habilitadas</strong>
+      <p>Os dados oficiais da organização ainda não foram cadastrados. Nenhuma chave de exemplo é apresentada para evitar transferências indevidas. Você pode ajudar com itens ou voluntariado.</p></div>
+      {% endif %}
+      {% if donation.qr_image %}
+      <div class="pix-qr-wrap"><img class="pix-qr" src="{{ donation.qr_image }}" alt="QR Code para doação via Pix"></div>
+      {% endif %}
+      <div class="suggested-values">
+        <div><strong>R$ 10</strong><small>ajuda com sachês e ração</small></div>
+        <div><strong>R$ 25</strong><small>apoia produtos de higiene</small></div>
+        <div><strong>R$ 50</strong><small>contribui com medicação</small></div>
+        <div><strong>Outro valor</strong><small>apoia cuidados mais completos</small></div>
+      </div>
+      <div class="care-note space-top"><strong>Importante</strong><p>O site não processa pagamentos. A contribuição é feita diretamente pelo canal oficial informado pela ONG.</p></div>
+      {% if donation.receipt_contact %}<p class="small-muted">Se desejar informar uma contribuição feita diretamente à ONG, encaminhe o comprovante pelo contato oficial: <b>{{ donation.receipt_contact }}</b></p>{% endif %}
+    </div>
+    <div class="stack-col">
+      <div class="action-card donation-side-card">
+        <span class="action-icon green">♡</span><h3>Doações de materiais</h3><p>Ração, produtos de higiene, cobertores, remédios e outros itens podem apoiar ações de proteção animal.</p><span class="small-muted">Consulte a equipe sobre necessidades e pontos de coleta.</span>
+      </div>
+      <div class="action-card donation-side-card">
+        <span class="action-icon blue">◷</span><h3>Doe seu tempo</h3><p>Ajude em eventos, campanhas, divulgação e cuidados autorizados com os animais.</p><a class="text-link" href="/voluntariado">Quero ser voluntário ↗</a>
+      </div>
+      <div class="action-card donation-side-card">
+        <span class="action-icon orange">↗</span><h3>Compartilhe a causa</h3><p>Divulgue animais disponíveis e campanhas educativas para ampliar as chances de um novo lar.</p><a class="text-link" href="/adotar">Conhecer animais ↗</a>
+      </div>
+    </div>
+  </div>
+  <div class="care-note space-top"><strong>Precisa solicitar o acolhimento de um animal?</strong><p>Envie informações para análise da equipe. O preenchimento não significa aceitação automática do animal.</p><a class="text-link" href="/entregar-animal">Solicitar acolhimento ↗</a></div>
+</section>
+{% else %}
+<section class="container form-page"><div class="form-page-grid"><div><h2>Seu tempo vale <span>muito.</span></h2><p class="lead">Voluntários podem apoiar campanhas, divulgação, organização de eventos e ações autorizadas pela equipe.</p><div class="info-tile"><strong>O que acontece depois?</strong><p>Sua candidatura ficará pendente de avaliação e o resultado aparecerá na sua conta.</p></div></div><form class="card stack-form" method="post" action="/voluntariado"><input name="csrf" type="hidden" value="{{csrf}}"><h2>Quero ser voluntário</h2><label>Como gostaria de ajudar? *<select name="area" required><option value="">Selecione</option><option>Eventos e campanhas</option><option>Divulgação e redes sociais</option><option>Transporte e logística</option><option>Cuidados autorizados</option><option>Outros</option></select></label><label>Sua disponibilidade *<input name="availability" required placeholder="Ex.: sábados pela manhã"></label><label>Conte um pouco sobre você *<textarea name="message" minlength="15" rows="5" required placeholder="Por que deseja ajudar?"></textarea></label><button class="btn btn-primary btn-wide" type="submit">Enviar candidatura →</button>{% if not user %}<p class="small-muted">Para se candidatar, <a href="/entrar">entre na sua conta</a> ou <a href="/cadastro">cadastre-se</a>.</p>{% endif %}</form></div></section>
+{% endif %}{% endblock %}
