@@ -50,6 +50,10 @@ bash iniciar.sh admin
 
 Para incluir quatro animais fictícios de demonstração, use o comando `demo` no lugar de `admin`.
 
+## Comparação com a documentação
+
+Veja o [comparativo resumido](COMPARATIVO.md).
+
 ## Observação
 
 Este é um **projeto acadêmico de demonstração**. Os animais e as imagens de exemplo são fictícios e não representam animais reais disponíveis para adoção.
